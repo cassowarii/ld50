@@ -483,6 +483,10 @@ document.onkeydown = function(e) {
         }
         e.preventDefault();
     }
+
+    if (e.keyCode == 90 || e.keyCode == 27 || e.keyCode == 82 || e.keyCode == 77) {
+        e.preventDefault();
+    }
 }
 
 document.onkeyup = function(e) {
@@ -1012,7 +1016,7 @@ function update(delta) {
 
             if (o.z > dynamic_elev_below(o.z, o.x, o.y) && !(floats[o.id] && o.z + objheights[o.id] <= water_level + 1)) {
                 let could_splash = false;
-                if (o.z > water_level) {
+                if (o.z + 1 >= water_level) {
                     could_splash = true;
                 }
 
@@ -1020,7 +1024,7 @@ function update(delta) {
                 o.zspeed -= gravity * seconds;
                 game_state = State.OBJFALL;
 
-                if (could_splash && o.z <= water_level) {
+                if (could_splash && o.z < water_level) {
                     playSfx('splash');
                 }
 
